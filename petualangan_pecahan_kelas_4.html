@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petualangan Pecahan: Penjumlahan & Pengurangan (Kelas 4 SD)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Fredoka & Nunito -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.com/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f0fdf4;
+        }
+        h1, h2, h3, .font-heading {
+            font-family: 'Fredoka', cursive;
+        }
+
+        /* Standardized Vertical Fraction Component */
+        .frac {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            vertical-align: middle;
+            text-align: center;
+            line-height: 1.1;
+            margin: 0 4px;
+            font-weight: 700;
+        }
+        .frac .top {
+            border-bottom: 2px solid currentColor;
+            padding: 0 4px 1px 4px;
+            width: 100%;
+        }
+        .frac .bottom {
+            padding: 1px 4px 0 4px;
+            width: 100%;
+        }
+
+        /* Large Fraction Variant for Math Cards */
+        .frac-lg {
+            font-size: 1.25rem;
+        }
+        .frac-lg .top {
+            border-bottom-width: 3px;
+        }
+
+        .butterfly-wing {
+            border: 3px dashed #ec4899;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        .butterfly-wing:hover {
+            background-color: #fbcfe8;
+            transform: scale(1.05);
+        }
+        .bounce-gentle {
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .glow-warning {
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+            animation: pulse-glow 1.5s infinite alternate;
+        }
+        @keyframes pulse-glow {
+            from { box-shadow: 0 0 5px rgba(245, 158, 11, 0.3); }
+            to { box-shadow: 0 0 18px rgba(245, 158, 11, 0.7); }
+        }
+    </style>
+</head>
+<body class="text-slate-800 pb-16">
+
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b-4 border-emerald-400 shadow-sm">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-emerald-500 rounded-2xl flex items-center justify-center text-white text-xl font-bold shadow-md">
+                    🧩
+                </div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-bold text-emerald-600 leading-tight">Petualangan Pecahan</h1>
+                    <p class="text-xs text-slate-500 font-semibold">Kelas 4 SD • Penguatan &amp; Evaluasi</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-2 bg-amber-100 px-3 py-1.5 rounded-full border-2 border-amber-300">
+                <i class="fa-solid fa-star text-amber-500 text-lg"></i>
+                <span id="global-stars" class="font-bold text-amber-800 text-base">0</span>
+                <span class="text-xs text-amber-700 font-semibold">Bintang</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-5xl mx-auto px-4 mt-6">
+        <div class="bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 rounded-3xl p-6 md:p-8 text-white shadow-xl relative overflow-hidden flex flex-col md:flex-row items-center gap-6">
+            <div class="relative z-10 text-center md:text-left flex-1">
+                <span class="bg-emerald-700/50 text-emerald-100 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block">
+                    Modul Matematika SD
+                </span>
+                <h2 class="text-2xl md:text-4xl font-extrabold mb-2">Penjumlahan &amp; Pengurangan Pecahan</h2>
+                <p class="text-emerald-50 text-sm md:text-base leading-relaxed">
+                    Siap jadi Master Pecahan? Ingat aturan terpenting: <span class="underline decoration-amber-300 decoration-4 font-bold bg-amber-400/20 px-1.5 py-0.5 rounded">Selalu CEK apakah jawabanmu bisa disederhanakan!</span> 🔍
+                </p>
+            </div>
+            <div class="flex-shrink-0 text-center">
+                <div class="w-28 h-28 md:w-32 md:h-32 bg-white/20 backdrop-blur-md rounded-full p-3 flex items-center justify-center border-4 border-white/40 shadow-inner bounce-gentle">
+                    <span class="text-6xl md:text-7xl">🦉</span>
+                </div>
+                <p class="text-xs font-bold mt-2 bg-white/30 px-3 py-1 rounded-full inline-block">Kuki si Burung Hantu</p>
+            </div>
+        </div>
+    </div>
+
+    <main class="max-w-5xl mx-auto px-4 mt-8 space-y-10">
+
+        <section id="tujuan" class="bg-white rounded-3xl p-6 shadow-md border-2 border-emerald-100">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-8 h-8 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center font-bold">
+                    1
+                </div>
+                <h3 class="text-xl font-bold text-slate-800">🎯 Tujuan Pembelajaran Hari Ini</h3>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 flex items-start gap-3">
+                    <div class="text-2xl text-emerald-500">➕</div>
+                    <div>
+                        <h4 class="font-bold text-emerald-900 text-sm">Penyebut Sama</h4>
+                        <p class="text-xs text-emerald-700 mt-1">Mengoperasikan pecahan dengan penyebut sama dengan cepat dan tepat.</p>
+                    </div>
+                </div>
+
+                <div class="bg-sky-50 border border-sky-200 rounded-2xl p-4 flex items-start gap-3">
+                    <div class="text-2xl text-sky-500">🦋</div>
+                    <div>
+                        <h4 class="font-bold text-sky-900 text-sm">Metode Kupu-Kupu</h4>
+                        <p class="text-xs text-sky-700 mt-1">Menyelesaikan operasi pecahan penyebut berbeda menggunakan metode perkalian silang.</p>
+                    </div>
+                </div>
+
+                <div class="bg-amber-50 border-2 border-amber-300 rounded-2xl p-4 flex items-start gap-3 relative overflow-hidden">
+                    <div class="absolute -top-1 -right-1 bg-amber-400 text-amber-950 font-extrabold text-[10px] px-2 py-0.5 rounded-bl-lg">
+                        WAJIB!
+                    </div>
+                    <div class="text-2xl text-amber-500">🔍</div>
+                    <div>
+                        <h4 class="font-bold text-amber-900 text-sm">Detektif Penyederhanaan</h4>
+                        <p class="text-xs text-amber-800 mt-1">Selalu mengecek &amp; menyederhanakan hasil akhir ke bentuk paling sederhana (dibagi FPB).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="warmup" class="bg-white rounded-3xl p-6 shadow-md border-2 border-orange-100">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-orange-100 text-orange-600 rounded-xl flex items-center justify-center font-bold">
+                        2
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-800">🔥 Warm-Up (5 Soal Pemanasan)</h3>
+                        <p class="text-xs text-slate-500">Ayo selaraskan ingatan dasarmu sebelum masuk materi utama!</p>
+                    </div>
+                </div>
+                <div class="text-xs font-bold text-orange-600 bg-orange-50 px-3 py-1 rounded-full border border-orange-200">
+                    Progres: <span id="warmup-progress-text">0/5</span>
+                </div>
+            </div>
+
+            <!-- Warm-up Cards Container -->
+            <div id="warmup-container" class="space-y-4">
+                <!-- Warm-up questions rendered via JS -->
+            </div>
+
+            <div id="warmup-completion" class="hidden mt-6 bg-emerald-100 border-2 border-emerald-400 text-emerald-800 rounded-2xl p-4 text-center">
+                <div class="text-3xl mb-1">🎉</div>
+                <h4 class="font-bold text-lg">Hebat! Pemanasan Selesai!</h4>
+                <p class="text-xs">Kamu telah memenangkan <span class="font-bold">5 Bintang Pemanasan</span>. Sekarang ayo lanjut ke petualangan berikutnya!</p>
+            </div>
+        </section>
+
+        <section id="koneksi" class="bg-white rounded-3xl p-6 shadow-md border-2 border-indigo-100">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-8 h-8 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center font-bold">
+                    3
+                </div>
+                <h3 class="text-xl font-bold text-slate-800">🍕 Cerita Nyata: Berbagi Martabak Manis</h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                <div class="space-y-3 text-slate-700 text-sm leading-relaxed">
+                    <p class="bg-indigo-50 p-4 rounded-2xl border border-indigo-100">
+                        "Budi membawa <strong>1 martabak</strong> yang sudah dipotong menjadi <strong>8 bagian sama besar</strong>. 
+                        Budi memakan <span class="font-bold text-emerald-600">2 potong</span>, dan Ani memakan <span class="font-bold text-sky-600">2 potong</span>."
+                    </p>
+                    <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                        <p class="font-semibold text-slate-800">Berapa bagian martabak yang sudah dimakan mereka berdua?</p>
+                        <div class="flex items-center gap-2 text-base bg-white p-3 rounded-xl border">
+                            <span>Budi:</span>
+                            <span class="frac text-emerald-600"><span class="top">2</span><span class="bottom">8</span></span>
+                            <span>+ Ani:</span>
+                            <span class="frac text-sky-600"><span class="top">2</span><span class="bottom">8</span></span>
+                            <span>=</span>
+                            <span class="frac font-bold text-indigo-600"><span class="top">4</span><span class="bottom">8</span></span>
+                        </div>
+                        <div class="mt-2 text-xs bg-amber-100 border border-amber-300 text-amber-900 p-3 rounded-xl font-semibold flex items-center gap-2">
+                            <span class="text-lg">⚠️</span>
+                            <span>Tunggu! Apakah <span class="frac"><span class="top">4</span><span class="bottom">8</span></span> adalah jawaban akhir? <strong>TIDAK!</strong> Pecahan <span class="frac"><span class="top">4</span><span class="bottom">8</span></span> wajib disederhanakan menjadi <strong><span class="frac"><span class="top">1</span><span class="bottom">2</span></span></strong> martabak (setengah martabak)!</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visual Interactive Pizza / Martabak -->
+                <div class="bg-amber-50/60 p-6 rounded-3xl border-2 border-dashed border-amber-200 text-center flex flex-col items-center">
+                    <h4 class="font-bold text-amber-900 text-sm mb-3">Simulasi Potongan Martabak (8 Bagian)</h4>
+                    
+                    <div class="relative w-48 h-48 bg-amber-200 rounded-full border-4 border-amber-700 shadow-md flex items-center justify-center overflow-hidden">
+                        <!-- Slices simulation grid lines -->
+                        <div class="absolute w-full h-1 bg-amber-700"></div>
+                        <div class="absolute h-full w-1 bg-amber-700"></div>
+                        <div class="absolute w-full h-1 bg-amber-700 rotate-45"></div>
+                        <div class="absolute w-full h-1 bg-amber-700 -rotate-45"></div>
+
+                        <!-- Highlights for eaten parts -->
+                        <div class="absolute inset-0 bg-amber-800/10 flex items-center justify-center">
+                            <div class="w-full h-full rounded-full border-8 border-amber-900/20"></div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 flex flex-wrap justify-center gap-3 text-xs font-bold">
+                        <span class="flex items-center gap-1.5"><span class="w-3 h-3 bg-amber-300 border border-amber-600 rounded-full inline-block"></span> <span class="frac"><span class="top">4</span><span class="bottom">8</span></span> = <span class="frac"><span class="top">1</span><span class="bottom">2</span></span> Dimakan</span>
+                        <span class="flex items-center gap-1.5"><span class="w-3 h-3 bg-amber-700 rounded-full inline-block"></span> <span class="frac"><span class="top">4</span><span class="bottom">8</span></span> Sisa</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="materi" class="bg-white rounded-3xl p-6 shadow-md border-2 border-teal-100">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-8 h-8 bg-teal-100 text-teal-600 rounded-xl flex items-center justify-center font-bold">
+                    4
+                </div>
+                <h3 class="text-xl font-bold text-slate-800">📘 Materi Lengkap &amp; Trik Cepat</h3>
+            </div>
+
+            <!-- Tab Navigation for Material -->
+            <div class="flex flex-wrap border-b border-slate-200 mb-6 gap-2">
+                <button onclick="switchTab('tab-sama')" id="btn-tab-sama" class="px-4 py-2 font-bold text-sm text-teal-600 border-b-4 border-teal-500 rounded-t-lg bg-teal-50">
+                    1. Penyebut Sama
+                </button>
+                <button onclick="switchTab('tab-kupu')" id="btn-tab-kupu" class="px-4 py-2 font-bold text-sm text-slate-500 border-b-4 border-transparent hover:text-teal-600">
+                    2. Metode Kupu-Kupu 🦋
+                </button>
+                <button onclick="switchTab('tab-sederhana')" id="btn-tab-sederhana" class="px-4 py-2 font-bold text-sm text-slate-500 border-b-4 border-transparent hover:text-amber-600">
+                    3. Wajib Sederhanakan! 🔍
+                </button>
+            </div>
+
+            <!-- Tab Content 1: Penyebut Sama -->
+            <div id="tab-sama" class="tab-content space-y-4">
+                <div class="bg-teal-50 p-4 rounded-2xl border border-teal-200">
+                    <h4 class="font-bold text-teal-900 mb-2">Aturan Penjumlahan &amp; Pengurangan Penyebut Sama:</h4>
+                    <p class="text-sm text-teal-800">
+                        Jika penyebutnya (angka di bawah) sudah <span class="font-bold underline">SAMA</span>, kamu hanya perlu menjumlahkan atau mengurangkan <strong>PEMBILANGNYA saja</strong> (angka di atas). Penyebutnya <strong>tetap</strong>!
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Contoh 1 -->
+                    <div class="bg-white border-2 border-teal-100 p-4 rounded-2xl shadow-sm">
+                        <span class="text-xs font-bold text-teal-600 bg-teal-100 px-2.5 py-1 rounded-full">Contoh Penjumlahan</span>
+                        <div class="mt-4 flex items-center justify-center gap-2 text-lg font-bold">
+                            <span class="frac text-emerald-600"><span class="top">2</span><span class="bottom">6</span></span>
+                            <span>+</span>
+                            <span class="frac text-emerald-600"><span class="top">1</span><span class="bottom">6</span></span>
+                            <span>=</span>
+                            <span class="frac text-teal-700"><span class="top">2 + 1</span><span class="bottom">6</span></span>
+                            <span>=</span>
+                            <span class="frac text-indigo-700"><span class="top">3</span><span class="bottom">6</span></span>
+                        </div>
+                        <div class="mt-4 bg-amber-50 p-3 rounded-xl border border-amber-200 text-xs text-amber-900 font-semibold">
+                            💡 <strong>Cek Sederhanakan:</strong> <br>
+                            Pecahan <span class="frac"><span class="top">3</span><span class="bottom">6</span></span> bisa dibagi 3 (FPB = 3) 👉 <span class="frac text-emerald-700 font-bold"><span class="top">1</span><span class="bottom">2</span></span>
+                        </div>
+                    </div>
+
+                    <!-- Contoh 2 -->
+                    <div class="bg-white border-2 border-teal-100 p-4 rounded-2xl shadow-sm">
+                        <span class="text-xs font-bold text-rose-600 bg-rose-100 px-2.5 py-1 rounded-full">Contoh Pengurangan</span>
+                        <div class="mt-4 flex items-center justify-center gap-2 text-lg font-bold">
+                            <span class="frac text-rose-600"><span class="top">7</span><span class="bottom">10</span></span>
+                            <span>-</span>
+                            <span class="frac text-rose-600"><span class="top">3</span><span class="bottom">10</span></span>
+                            <span>=</span>
+                            <span class="frac text-teal-700"><span class="top">7 - 3</span><span class="bottom">10</span></span>
+                            <span>=</span>
+                            <span class="frac text-indigo-700"><span class="top">4</span><span class="bottom">10</span></span>
+                        </div>
+                        <div class="mt-4 bg-amber-50 p-3 rounded-xl border border-amber-200 text-xs text-amber-900 font-semibold">
+                            💡 <strong>Cek Sederhanakan:</strong> <br>
+                            Pecahan <span class="frac"><span class="top">4</span><span class="bottom">10</span></span> bisa dibagi 2 (FPB = 2) 👉 <span class="frac text-emerald-700 font-bold"><span class="top">2</span><span class="bottom">5</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Content 2: Metode Kupu-Kupu -->
+            <div id="tab-kupu" class="tab-content hidden space-y-4">
+                <div class="bg-pink-50 p-4 rounded-2xl border border-pink-200">
+                    <h4 class="font-bold text-pink-900 mb-1">Metode Kupu-Kupu (🦋 Perkalian Silang)</h4>
+                    <p class="text-sm text-pink-800">
+                        Gunakan metode kupu-kupu jika penyebutnya <span class="font-bold underline">BERBEDA</span>!
+                    </p>
+                </div>
+
+                <!-- Step-by-step Butterfly Visualizer -->
+                <div class="bg-white border-2 border-pink-200 p-5 rounded-3xl text-center space-y-4">
+                    <h5 class="font-bold text-slate-800 text-base">Langkah Kupu-Kupu untuk <span class="frac text-pink-600"><span class="top">1</span><span class="bottom">3</span></span> + <span class="frac text-pink-600"><span class="top">1</span><span class="bottom">2</span></span>:</h5>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                        <div class="bg-pink-50 p-3 rounded-2xl border border-pink-200">
+                            <div class="font-bold text-pink-700 text-sm mb-1">Langkah 1: Sayap Kupu-Kupu 🦋</div>
+                            <p class="text-slate-600 mb-2">Kali silang pembilang dan penyebut!</p>
+                            <div class="text-xs bg-white p-2 rounded border">
+                                • (1 × 2) = <strong class="text-pink-600">2</strong> <br>
+                                • (1 × 3) = <strong class="text-pink-600">3</strong>
+                            </div>
+                        </div>
+
+                        <div class="bg-purple-50 p-3 rounded-2xl border border-purple-200">
+                            <div class="font-bold text-purple-700 text-sm mb-1">Langkah 2: Badan/Ekor 🐛</div>
+                            <p class="text-slate-600 mb-2">Kalikan kedua penyebut bawah!</p>
+                            <div class="text-xs bg-white p-2 rounded border">
+                                • (3 × 2) = <strong class="text-purple-600">6</strong>
+                            </div>
+                        </div>
+
+                        <div class="bg-emerald-50 p-3 rounded-2xl border border-emerald-200">
+                            <div class="font-bold text-emerald-700 text-sm mb-1">Langkah 3: Jumlahkan &amp; Cek! ✨</div>
+                            <p class="text-slate-600 mb-2">Atas dijumlah, bawah tetap!</p>
+                            <div class="text-xs bg-white p-2 rounded border flex flex-col items-center gap-1">
+                                <span class="flex items-center gap-1">
+                                    <span class="frac"><span class="top">2 + 3</span><span class="bottom">6</span></span> = <span class="frac font-bold text-emerald-600"><span class="top">5</span><span class="bottom">6</span></span>
+                                </span>
+                                <span class="text-[10px] text-amber-700 font-bold">(Sudah Paling Sederhana!)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Content 3: Wajib Sederhanakan! -->
+            <div id="tab-sederhana" class="tab-content hidden space-y-4">
+                <div class="bg-amber-50 p-4 rounded-2xl border-2 border-amber-300">
+                    <div class="flex items-center gap-2 text-amber-900 font-bold text-lg mb-1">
+                        <span>🕵️‍♂️</span>
+                        <span>Seksi Rahasia: Detektif Penyederhanaan!</span>
+                    </div>
+                    <p class="text-sm text-amber-800">
+                        Banyak anak kehilangan nilai di ujian karena <span class="font-bold text-red-600 underline">LUPA MENYEDERHANAKAN</span> jawaban akhir! 
+                        Caranya: <strong>Bagi pembilang dan penyebut dengan angka yang sama (FPB)</strong> sampai tidak bisa dibagi lagi selain angka 1.
+                    </p>
+                </div>
+
+                <!-- Interactive Simplification Checker Tool -->
+                <div class="bg-slate-900 text-white p-6 rounded-3xl shadow-lg">
+                    <h5 class="text-amber-400 font-bold text-center mb-4">🧪 Alat Uji Coba Penyederhanaan Interaktif</h5>
+                    
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <!-- Input pecahan awal -->
+                        <div class="flex items-center gap-2 bg-slate-800 p-3 rounded-2xl border border-slate-700">
+                            <span class="text-xs text-slate-400 font-bold">Pecahan Awal:</span>
+                            <div class="flex flex-col gap-1 w-16">
+                                <input id="sim-num" type="number" value="6" class="bg-slate-700 text-amber-300 font-bold text-center rounded p-1 text-sm border border-slate-600">
+                                <div class="h-0.5 bg-slate-400"></div>
+                                <input id="sim-den" type="number" value="12" class="bg-slate-700 text-amber-300 font-bold text-center rounded p-1 text-sm border border-slate-600">
+                            </div>
+                        </div>
+
+                        <div class="text-xl text-amber-400 font-bold">dibagi 👇</div>
+
+                        <!-- Division factor -->
+                        <div class="flex items-center gap-2 bg-slate-800 p-3 rounded-2xl border border-slate-700">
+                            <span class="text-xs text-slate-400 font-bold">Bagi dengan:</span>
+                            <input id="sim-factor" type="number" value="6" class="w-16 bg-slate-700 text-emerald-300 font-bold text-center rounded p-2 text-base border border-slate-600">
+                        </div>
+
+                        <button onclick="testSimplification()" class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-slate-950 font-extrabold px-5 py-3 rounded-2xl shadow-md transition-all text-sm">
+                            Uji Coba! ✨
+                        </button>
+                    </div>
+
+                    <!-- Output Result -->
+                    <div id="sim-result" class="mt-4 p-3 bg-slate-800 rounded-2xl text-center text-sm font-semibold border border-slate-700">
+                        Masukkan angka dan klik "Uji Coba!" untuk melihat hasilnya.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="latihan" class="bg-white rounded-3xl p-6 shadow-md border-2 border-purple-100">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center font-bold">
+                        5
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-800">✍️ Latihan Soal Terbimbing</h3>
+                        <p class="text-xs text-slate-500">Ikuti langkah-langkahnya dan wajib cek penyederhanaan!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Practice Cards -->
+            <div id="guided-practice-container" class="space-y-8">
+                <!-- Practice cards injected by JS -->
+            </div>
+        </section>
+
+        <section id="evaluasi" class="bg-white rounded-3xl p-6 shadow-md border-2 border-rose-100">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-rose-100 text-rose-600 rounded-xl flex items-center justify-center font-bold">
+                        6
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-800">🎓 Evaluasi Akhir Detektif Pecahan</h3>
+                        <p class="text-xs text-slate-500">Uji kemampuanmu secara mandiri!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="eval-container" class="space-y-6">
+                <!-- Evaluation questions injected by JS -->
+            </div>
+
+            <!-- Non-intrusive Inline Warning Message -->
+            <div id="eval-warning-msg" class="hidden mt-4 bg-amber-100 border border-amber-300 text-amber-900 text-xs font-bold p-3 rounded-2xl text-center">
+                ⚠️ Harap jawab semua 4 soal evaluasi terlebih dahulu ya!
+            </div>
+
+            <div class="mt-6 text-center">
+                <button onclick="submitEvaluation()" class="bg-gradient-to-r from-rose-500 to-pink-600 text-white font-bold px-8 py-3.5 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all text-base">
+                    🏆 Selesaikan &amp; Ambil Rapor Pecahan!
+                </button>
+            </div>
+
+            <!-- Report Card Modal / Box -->
+            <div id="report-card" class="hidden mt-8 bg-gradient-to-br from-amber-50 to-orange-50 border-4 border-amber-300 rounded-3xl p-6 text-center relative shadow-xl">
+                <div class="text-5xl mb-2">🏅</div>
+                <h4 class="text-2xl font-black text-amber-900">Rapor Petualangan Pecahan</h4>
+                <p class="text-xs text-amber-700 font-semibold mb-4">Kelas 4 SD - Matematika</p>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 my-4">
+                    <div class="bg-white p-3 rounded-2xl border border-amber-200">
+                        <span class="text-xs text-slate-500 block">Skor Evaluasi</span>
+                        <span id="eval-score" class="text-2xl font-bold text-emerald-600">0/100</span>
+                    </div>
+                    <div class="bg-white p-3 rounded-2xl border border-amber-200">
+                        <span class="text-xs text-slate-500 block">Bintang Diraih</span>
+                        <span id="eval-stars" class="text-2xl font-bold text-amber-500">⭐ 0</span>
+                    </div>
+                    <div class="bg-white p-3 rounded-2xl border border-amber-200">
+                        <span class="text-xs text-slate-500 block">Cek Sederhana</span>
+                        <span id="eval-simp-count" class="text-2xl font-bold text-indigo-600">100%</span>
+                    </div>
+                    <div class="bg-white p-3 rounded-2xl border border-amber-200">
+                        <span class="text-xs text-slate-500 block">Gelar Pecahan</span>
+                        <span id="eval-title" class="text-sm font-bold text-purple-600 mt-1 block">Master Pecahan</span>
+                    </div>
+                </div>
+
+                <div id="eval-feedback-msg" class="bg-white/80 p-4 rounded-2xl border border-amber-200 text-sm text-amber-950 font-medium my-3">
+                    Luar biasa! Kamu adalah Master Pecahan yang teliti!
+                </div>
+
+                <button onclick="window.scrollTo({top: 0, behavior: 'smooth'});" class="bg-amber-500 text-white font-bold px-6 py-2.5 rounded-xl shadow hover:bg-amber-600 text-sm">
+                    🚀 Coba Lagi / Ke Atas
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Global Game State
+        let globalStars = 0;
+        let warmupAnswered = 0;
+
+        // Helper to generate clean vertical fraction HTML string
+        function fracHTML(num, den, extraClass = "") {
+            return `<span class="frac ${extraClass}"><span class="top">${num}</span><span class="bottom">${den}</span></span>`;
+        }
+
+        function addStars(count) {
+            globalStars += count;
+            document.getElementById('global-stars').innerText = globalStars;
+        }
+
+        // Tab Switching
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(tabId).classList.remove('hidden');
+
+            const btnSama = document.getElementById('btn-tab-sama');
+            const btnKupu = document.getElementById('btn-tab-kupu');
+            const btnSederhana = document.getElementById('btn-tab-sederhana');
+
+            // Reset styles
+            [btnSama, btnKupu, btnSederhana].forEach(btn => {
+                btn.className = "px-4 py-2 font-bold text-sm text-slate-500 border-b-4 border-transparent hover:text-teal-600";
+            });
+
+            if(tabId === 'tab-sama') {
+                btnSama.className = "px-4 py-2 font-bold text-sm text-teal-600 border-b-4 border-teal-500 rounded-t-lg bg-teal-50";
+            } else if(tabId === 'tab-kupu') {
+                btnKupu.className = "px-4 py-2 font-bold text-sm text-pink-600 border-b-4 border-pink-500 rounded-t-lg bg-pink-50";
+            } else if(tabId === 'tab-sederhana') {
+                btnSederhana.className = "px-4 py-2 font-bold text-sm text-amber-600 border-b-4 border-amber-500 rounded-t-lg bg-amber-50";
+            }
+        }
+
+        const warmupData = [
+            {
+                id: 1,
+                question: `Pada pecahan ${fracHTML(3, 8)}, angka 3 disebut sebagai...`,
+                options: ["Penyebut (di bawah)", "Pembilang (di atas)", "FPB", "Sisa"],
+                correct: 1,
+                explanation: "Angka di atas garis pecahan dinamakan Pembilang!"
+            },
+            {
+                id: 2,
+                question: "Manakah pasangan pecahan di bawah ini yang memiliki PENYEBUT SAMA?",
+                options: [
+                    `${fracHTML(1, 4)} dan ${fracHTML(1, 3)}`,
+                    `${fracHTML(2, 5)} dan ${fracHTML(4, 5)}`,
+                    `${fracHTML(3, 7)} dan ${fracHTML(3, 8)}`,
+                    `${fracHTML(1, 2)} dan ${fracHTML(2, 4)}`
+                ],
+                correct: 1,
+                explanation: `Pasangan ${fracHTML(2, 5)} dan ${fracHTML(4, 5)} keduanya memiliki angka bawah (penyebut) yaitu 5.`
+            },
+            {
+                id: 3,
+                question: `Hasil dari ${fracHTML(2, 7)} + ${fracHTML(3, 7)} adalah...`,
+                options: [
+                    fracHTML(5, 14),
+                    fracHTML(5, 7),
+                    fracHTML(6, 7),
+                    fracHTML(1, 7)
+                ],
+                correct: 1,
+                explanation: `Penyebut sudah sama (7), cukup tambahkan atasnya: 2 + 3 = 5, sehingga menjadi ${fracHTML(5, 7)}.`
+            },
+            {
+                id: 4,
+                question: `Bentuk paling sederhana dari pecahan ${fracHTML(2, 4)} adalah...`,
+                options: [
+                    fracHTML(1, 2),
+                    fracHTML(1, 4),
+                    fracHTML(2, 2),
+                    fracHTML(3, 4)
+                ],
+                correct: 0,
+                explanation: `Pembilang dan penyebut dibagi 2: (2 ÷ 2) / (4 ÷ 2) = ${fracHTML(1, 2)}.`
+            },
+            {
+                id: 5,
+                question: `Apakah pecahan ${fracHTML(3, 9)} sudah paling sederhana?`,
+                options: [
+                    "Sudah paling sederhana",
+                    `Belum, bisa dibagi 3 menjadi ${fracHTML(1, 3)}`,
+                    "Belum, bisa dibagi 2",
+                    "Sudah tidak bisa dibagi lagi"
+                ],
+                correct: 1,
+                explanation: `Angka 3 dan 9 masih bisa dibagi 3, sehingga menjadi ${fracHTML(1, 3)}!`
+            }
+        ];
+
+        function renderWarmup() {
+            const container = document.getElementById('warmup-container');
+            container.innerHTML = warmupData.map((q) => `
+                <div id="warmup-card-${q.id}" class="p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
+                    <div class="flex items-start justify-between">
+                        <span class="font-bold text-xs text-orange-600 bg-orange-100 px-2.5 py-1 rounded-full">Soal ${q.id} dari 5</span>
+                    </div>
+                    <div class="font-bold text-slate-800 text-sm flex items-center gap-1 flex-wrap">${q.question}</div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        ${q.options.map((opt, oIdx) => `
+                            <button onclick="checkWarmup(${q.id}, ${oIdx})" class="warmup-opt-${q.id} text-left text-xs font-semibold p-3 rounded-xl border border-slate-200 bg-white hover:bg-orange-50 hover:border-orange-300 transition-all flex items-center gap-2">
+                                <span class="font-bold text-slate-400">${String.fromCharCode(65 + oIdx)}.</span>
+                                <span class="flex items-center gap-1">${opt}</span>
+                            </button>
+                        `).join('')}
+                    </div>
+                    <div id="warmup-feedback-${q.id}" class="hidden text-xs p-2.5 rounded-xl font-medium"></div>
+                </div>
+            `).join('');
+        }
+
+        function checkWarmup(qId, selectedIdx) {
+            const q = warmupData.find(item => item.id === qId);
+            const feedbackEl = document.getElementById(`warmup-feedback-${qId}`);
+            const buttons = document.querySelectorAll(`.warmup-opt-${qId}`);
+
+            buttons.forEach(btn => btn.disabled = true);
+
+            if (selectedIdx === q.correct) {
+                buttons[selectedIdx].classList.add('bg-emerald-100', 'border-emerald-500', 'text-emerald-900');
+                feedbackEl.className = "text-xs p-3 rounded-xl font-medium bg-emerald-100 border border-emerald-300 text-emerald-900 flex items-center gap-1 flex-wrap";
+                feedbackEl.innerHTML = `✅ <strong>Benar!</strong> ${q.explanation}`;
+                addStars(1);
+            } else {
+                buttons[selectedIdx].classList.add('bg-rose-100', 'border-rose-400', 'text-rose-900');
+                buttons[q.correct].classList.add('bg-emerald-100', 'border-emerald-400');
+                feedbackEl.className = "text-xs p-3 rounded-xl font-medium bg-rose-50 border border-rose-200 text-rose-900 flex items-center gap-1 flex-wrap";
+                feedbackEl.innerHTML = `❌ <strong>Kurang tepat.</strong> ${q.explanation}`;
+            }
+            feedbackEl.classList.remove('hidden');
+
+            warmupAnswered++;
+            document.getElementById('warmup-progress-text').innerText = `${warmupAnswered}/5`;
+
+            if (warmupAnswered === 5) {
+                document.getElementById('warmup-completion').classList.remove('hidden');
+                confetti({ particleCount: 50, spread: 60, origin: { y: 0.6 } });
+            }
+        }
+
+        function testSimplification() {
+            const num = parseInt(document.getElementById('sim-num').value) || 0;
+            const den = parseInt(document.getElementById('sim-den').value) || 1;
+            const factor = parseInt(document.getElementById('sim-factor').value) || 1;
+            const resEl = document.getElementById('sim-result');
+
+            if (factor <= 1) {
+                resEl.innerHTML = `<span class="text-amber-400">⚠️ Angka pembagi harus lebih besar dari 1 agar pecahan menjadi lebih sederhana!</span>`;
+                return;
+            }
+
+            if (num % factor === 0 && den % factor === 0) {
+                const newNum = num / factor;
+                const newDen = den / factor;
+                resEl.innerHTML = `
+                    <span class="text-emerald-400 font-bold">🎉 Berhasil Disederhanakan!</span><br>
+                    <span class="inline-flex items-center gap-2 mt-1">
+                        Pecahan ${fracHTML(num, den)} jika dibagi ${factor} menjadi 
+                        ${fracHTML(newNum, newDen, "text-emerald-300 font-bold")}
+                    </span>
+                `;
+            } else {
+                resEl.innerHTML = `
+                    <span class="text-rose-400">❌ Gagal!</span> Angka ${factor} tidak bisa membagi habis ${num} dan ${den} sekaligus. <br>
+                    <span class="text-xs text-slate-400">Cari angka lain yang bisa membagi keduanya tanpa sisa!</span>
+                `;
+            }
+        }
+
+        const practiceData = [
+            {
+                id: 1,
+                title: "Soal 1: Penjumlahan Penyebut Sama",
+                num1: 2, den1: 8, op: "+", num2: 2, den2: 8,
+                step1Num: 4, step1Den: 8,
+                needsSimplification: true,
+                finalNum: 1, finalDen: 2,
+                simpFactor: 4,
+                hint: "Sederhanakan pecahan 4/8 dengan membagi pembilang dan penyebut dengan angka 4!"
+            },
+            {
+                id: 2,
+                title: "Soal 2: Pengurangan Penyebut Sama",
+                num1: 5, den1: 6, op: "-", num2: 2, den2: 6,
+                step1Num: 3, step1Den: 6,
+                needsSimplification: true,
+                finalNum: 1, finalDen: 2,
+                simpFactor: 3,
+                hint: "Sederhanakan pecahan 3/6 dengan membagi pembilang dan penyebut dengan angka 3!"
+            },
+            {
+                id: 3,
+                title: "Soal 3: Penjumlahan Penyebut Berbeda (Metode Kupu-Kupu 🦋)",
+                num1: 1, den1: 4, op: "+", num2: 1, den2: 2,
+                step1Num: 6, step1Den: 8,
+                needsSimplification: true,
+                finalNum: 3, finalDen: 4,
+                simpFactor: 2,
+                hint: "Hasil kupu-kupu adalah 6/8. Karena keduanya angka genap, bisa dibagi 2 menjadi 3/4!"
+            }
+        ];
+
+        function renderGuidedPractice() {
+            const container = document.getElementById('guided-practice-container');
+            container.innerHTML = practiceData.map((p) => `
+                <div class="bg-slate-50 border-2 border-purple-200 rounded-3xl p-5 md:p-6 shadow-sm space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+                        <h4 class="font-bold text-purple-900 text-base">${p.title}</h4>
+                        <div class="flex items-center gap-2 bg-purple-100 text-purple-800 px-3 py-1.5 rounded-full font-bold">
+                            ${fracHTML(p.num1, p.den1)}
+                            <span>${p.op}</span>
+                            ${fracHTML(p.num2, p.den2)}
+                        </div>
+                    </div>
+
+                    <!-- Step 1: Input Hasil Pertama -->
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold text-slate-700 block">
+                            Langkah 1: Hitung Hasil Operasi Awal
+                        </label>
+                        <div class="flex items-center gap-3 bg-white p-3 rounded-2xl border border-slate-200 w-fit">
+                            <span class="text-xs text-slate-500 font-semibold">Hasil Awal = </span>
+                            <div class="flex flex-col gap-1 w-12">
+                                <input id="p-${p.id}-s1-num" type="number" placeholder="?" class="w-full text-center font-bold text-slate-800 bg-purple-50 rounded border border-purple-300 p-1 text-sm">
+                                <div class="h-0.5 bg-slate-800"></div>
+                                <input id="p-${p.id}-s1-den" type="number" placeholder="?" class="w-full text-center font-bold text-slate-800 bg-purple-50 rounded border border-purple-300 p-1 text-sm">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: WAJIB Cek Penyederhanaan Box -->
+                    <div class="bg-amber-100/80 border-2 border-amber-400 p-4 rounded-2xl space-y-3 glow-warning">
+                        <div class="flex items-center gap-2 text-amber-950 font-bold text-xs uppercase tracking-wider">
+                            <span>🔍 Langkah WAJIB: Cek &amp; Sederhanakan!</span>
+                        </div>
+                        <p class="text-xs text-amber-900 font-medium">
+                            Apakah hasil awal di atas bisa disederhanakan? Jika BISA, bagi pembilang &amp; penyebutnya dengan angka yang sama!
+                        </p>
+
+                        <div class="flex flex-wrap items-center gap-3">
+                            <div class="flex items-center gap-2 bg-white p-2.5 rounded-xl border border-amber-300">
+                                <span class="text-xs font-bold text-amber-900">Bentuk Paling Sederhana =</span>
+                                <div class="flex flex-col gap-1 w-12">
+                                    <input id="p-${p.id}-final-num" type="number" placeholder="?" class="w-full text-center font-bold text-emerald-700 bg-emerald-50 rounded border border-emerald-400 p-1 text-sm">
+                                    <div class="h-0.5 bg-slate-800"></div>
+                                    <input id="p-${p.id}-final-den" type="number" placeholder="?" class="w-full text-center font-bold text-emerald-700 bg-emerald-50 rounded border border-emerald-400 p-1 text-sm">
+                                </div>
+                            </div>
+
+                            <button onclick="checkPractice(${p.id})" class="bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs px-5 py-3 rounded-xl shadow-md transition-all">
+                                Periksa Jawaban ✨
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="p-${p.id}-feedback" class="hidden text-xs p-3 rounded-xl font-semibold"></div>
+                </div>
+            `).join('');
+        }
+
+        function checkPractice(pId) {
+            const p = practiceData.find(item => item.id === pId);
+            const s1Num = parseInt(document.getElementById(`p-${pId}-s1-num`).value);
+            const s1Den = parseInt(document.getElementById(`p-${pId}-s1-den`).value);
+            const fNum = parseInt(document.getElementById(`p-${pId}-final-num`).value);
+            const fDen = parseInt(document.getElementById(`p-${pId}-final-den`).value);
+            const feedbackEl = document.getElementById(`p-${pId}-feedback`);
+
+            if (isNaN(s1Num) || isNaN(s1Den) || isNaN(fNum) || isNaN(fDen)) {
+                feedbackEl.className = "text-xs p-3 rounded-xl font-semibold bg-amber-100 border border-amber-300 text-amber-900";
+                feedbackEl.innerHTML = "⚠️ Harap isi semua kotak pembilang dan penyebut terlebih dahulu ya!";
+                feedbackEl.classList.remove('hidden');
+                return;
+            }
+
+            const isS1Correct = (s1Num === p.step1Num && s1Den === p.step1Den);
+            const isFinalCorrect = (fNum === p.finalNum && fDen === p.finalDen);
+
+            if (isS1Correct && isFinalCorrect) {
+                feedbackEl.className = "text-xs p-3 rounded-xl font-semibold bg-emerald-100 border border-emerald-300 text-emerald-900 flex items-center gap-1 flex-wrap";
+                feedbackEl.innerHTML = `🎉 <strong>Luar Biasa Sempurna!</strong> Hasil awal ${fracHTML(s1Num, s1Den)} telah berhasil kamu sederhanakan menjadi <strong>${fracHTML(fNum, fDen)}</strong>! (+3 Bintang ⭐)`;
+                addStars(3);
+                confetti({ particleCount: 40, spread: 50, origin: { y: 0.7 } });
+            } else if (isS1Correct && !isFinalCorrect) {
+                feedbackEl.className = "text-xs p-3 rounded-xl font-semibold bg-amber-100 border border-amber-300 text-amber-900 flex items-center gap-1 flex-wrap";
+                feedbackEl.innerHTML = `👍 Hasil awal ${fracHTML(s1Num, s1Den)} sudah benar! Tapi <strong>penyederhanaannya belum tepat</strong>. <br>💡 <em>Petunjuk:</em> ${p.hint}`;
+            } else {
+                feedbackEl.className = "text-xs p-3 rounded-xl font-semibold bg-rose-100 border border-rose-300 text-rose-900";
+                feedbackEl.innerHTML = `❌ Periksa kembali hitungan hasil awalmu! Jangan lupa ikuti aturan penjumlahan/pengurangan pecahan.`;
+            }
+            feedbackEl.classList.remove('hidden');
+        }
+
+        const evalQuestions = [
+            {
+                id: 1,
+                q: `Hitunglah: ${fracHTML(3, 10)} + ${fracHTML(2, 10)} = ... (Jangan lupa disederhanakan jika bisa!)`,
+                options: [
+                    fracHTML(5, 10),
+                    fracHTML(1, 2),
+                    fracHTML(5, 20),
+                    fracHTML(2, 5)
+                ],
+                correct: 1,
+                explanation: `3/10 + 2/10 = 5/10. Disederhanakan dibagi 5 menjadi ${fracHTML(1, 2)}!`
+            },
+            {
+                id: 2,
+                q: `Hitunglah: ${fracHTML(8, 12)} - ${fracHTML(2, 12)} = ... (Pilihlah bentuk paling sederhana!)`,
+                options: [
+                    fracHTML(6, 12),
+                    fracHTML(1, 2),
+                    fracHTML(1, 3),
+                    fracHTML(4, 12)
+                ],
+                correct: 1,
+                explanation: `8/12 - 2/12 = 6/12. Disederhanakan dibagi 6 menjadi ${fracHTML(1, 2)}!`
+            },
+            {
+                id: 3,
+                q: `Gunakan metode kupu-kupu untuk: ${fracHTML(1, 3)} + ${fracHTML(1, 6)} = ... (Pilihlah bentuk paling sederhana!)`,
+                options: [
+                    fracHTML(2, 9),
+                    fracHTML(3, 6),
+                    fracHTML(1, 2),
+                    fracHTML(3, 18)
+                ],
+                correct: 2,
+                explanation: `(1×6 + 1×3) / (3×6) = 9/18. Disederhanakan dibagi 9 menjadi ${fracHTML(1, 2)}!`
+            },
+            {
+                id: 4,
+                q: `Ibu memiliki ${fracHTML(3, 4)} kg gula. Digunakan untuk membuat kue ${fracHTML(1, 4)} kg. Sisa gula ibu dalam bentuk paling sederhana adalah...`,
+                options: [
+                    `${fracHTML(2, 4)} kg`,
+                    `${fracHTML(1, 2)} kg`,
+                    `${fracHTML(1, 4)} kg`,
+                    `${fracHTML(2, 8)} kg`
+                ],
+                correct: 1,
+                explanation: `3/4 - 1/4 = 2/4 kg. Disederhanakan dibagi 2 menjadi ${fracHTML(1, 2)} kg!`
+            }
+        ];
+
+        function renderEvaluation() {
+            const container = document.getElementById('eval-container');
+            container.innerHTML = evalQuestions.map((q, idx) => `
+                <div class="bg-rose-50/50 border border-rose-200 p-4 rounded-2xl space-y-3">
+                    <span class="text-xs font-bold bg-rose-200 text-rose-800 px-2.5 py-1 rounded-full">Soal Evaluasi ${idx + 1}</span>
+                    <div class="text-sm font-bold text-slate-800 flex items-center gap-1 flex-wrap">${q.q}</div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        ${q.options.map((opt, oIdx) => `
+                            <label class="flex items-center gap-2 p-3 bg-white border border-slate-200 rounded-xl cursor-pointer hover:bg-rose-50 transition-all text-xs font-semibold">
+                                <input type="radio" name="eval-${q.id}" value="${oIdx}" class="text-rose-600 focus:ring-rose-500">
+                                <span class="flex items-center gap-1">${opt}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function submitEvaluation() {
+            const warningEl = document.getElementById('eval-warning-msg');
+            warningEl.classList.add('hidden');
+
+            let score = 0;
+            let answered = 0;
+
+            evalQuestions.forEach(q => {
+                const selected = document.querySelector(`input[name="eval-${q.id}"]:checked`);
+                if (selected) {
+                    answered++;
+                    if (parseInt(selected.value) === q.correct) {
+                        score += 25;
+                    }
+                }
+            });
+
+            if (answered < evalQuestions.length) {
+                warningEl.innerText = "⚠️ Harap jawab semua 4 soal evaluasi terlebih dahulu ya!";
+                warningEl.classList.remove('hidden');
+                return;
+            }
+
+            // Display Report Card
+            document.getElementById('report-card').classList.remove('hidden');
+            document.getElementById('eval-score').innerText = `${score}/100`;
+            document.getElementById('eval-stars').innerText = `⭐ ${globalStars + (score / 10)}`;
+
+            let title = "Detektif Pemula";
+            let msg = "Terus berlatih ya! Jangan lupa untuk SELALU mengecek apakah pecahan bisa disederhanakan!";
+
+            if (score >= 75) {
+                title = "🦉 Master Pecahan Teliti";
+                msg = "Luar biasa hebat! Kamu tidak hanya pandai berhitung, tapi juga sangat teliti menyederhanakan pecahan!";
+                confetti({ particleCount: 100, spread: 80, origin: { y: 0.5 } });
+            } else if (score >= 50) {
+                title = "⭐ Detektif Pecahan Handal";
+                msg = "Bagus sekali! Sedikit lagi latihan menyederhanakan pecahan, kamu akan jadi Master!";
+            }
+
+            document.getElementById('eval-title').innerText = title;
+            document.getElementById('eval-feedback-msg').innerText = msg;
+
+            document.getElementById('report-card').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Initialize App on Load
+        window.onload = function() {
+            renderWarmup();
+            renderGuidedPractice();
+            renderEvaluation();
+        };
+    </script>
+</body>
+</html>
